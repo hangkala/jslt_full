@@ -42,7 +42,7 @@ public class UserLogic extends BaseDatabase {
 			return lsUser;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new SQLException("UserLogic + getListUser + Lỗi cú pháp SQL");
+			throw new SQLException("UserLogic + getListUser" + ERR_SQL);
 		} finally {
 			closeConnection();
 		}

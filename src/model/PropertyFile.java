@@ -18,6 +18,7 @@ public class PropertyFile {
 		FileInputStream in = null;
 		String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
 		String configPath = rootPath + "config.properties";
+		System.out.println(configPath);
 		try {
 			in = new FileInputStream(configPath);
 			properties.load(in);
