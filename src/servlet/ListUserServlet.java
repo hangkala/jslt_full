@@ -33,11 +33,14 @@ public class ListUserServlet extends HttpServlet{
 			RequestDispatcher rd = req.getRequestDispatcher("listUser.jsp");
 			rd.forward(req, resp);
 			System.out.println(lsUser);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {
+			System.out.println("==============");
+			System.out.println("Loi " + e.getMessage());
+			System.out.println(e.getLocalizedMessage());
+			resp.setCharacterEncoding("UTF-8");
+			StringBuilder mess = new StringBuilder(e.getMessage());
+			resp.sendRedirect("error?errdetail="+mess);
+		} 
 		System.out.println("doget");
 	}
 }

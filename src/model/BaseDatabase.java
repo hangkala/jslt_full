@@ -13,17 +13,19 @@ import java.sql.SQLException;
  *
  */
 public class BaseDatabase {
-	public static final String URL = "jdbc:mysql://localhost/user";
-	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	public static final String USER = "root";
-	public static final String PASS = "thuyhoang";
+	public static final String URL = PropertyFile.readProperty("url");
+	public static final String DRIVER = PropertyFile.readProperty("driver");
+	public static final String USER = PropertyFile.readProperty("user");
+	public static final String PASS = PropertyFile.readProperty("pass");
+	public static final String ERR_CLASS = PropertyFile.readProperty("classerr");
+	public static final String ERR_SQL = PropertyFile.readProperty("sqlerr");
 	protected Connection con;
 	
 	public BaseDatabase() throws ClassNotFoundException {
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException e) {
-			throw new ClassNotFoundException("Loi lien ket database");
+			throw new ClassNotFoundException(ERR_CLASS);
 		}
 	}
 	
@@ -32,18 +34,19 @@ public class BaseDatabase {
 			con = DriverManager.getConnection(URL, USER, PASS);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			throw new SQLException("Loi cau lenh SQL");
+			throw new SQLException(ERR_SQL);
 		}
 	}
 	
 	protected void closeConnection() throws SQLException {
 		try {
-			if(con != null || !con.isClosed()) {
-				con.close();
+			if(con == null || con.isClosed()) {
+				return;
 			}
+			con.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			throw e;
+			throw new SQLException(ERR_SQL);
 		}
 	}
 }
