@@ -19,6 +19,7 @@ public class BaseDatabase {
 	public static final String PASS = PropertyFile.readProperty("pass");
 	public static final String ERR_CLASS = PropertyFile.readProperty("classerr");
 	public static final String ERR_SQL = PropertyFile.readProperty("sqlerr");
+	private static final String CLASS_NAME = "BaseDatabase";
 	protected Connection con;
 	
 	public BaseDatabase() throws ClassNotFoundException {
@@ -33,7 +34,7 @@ public class BaseDatabase {
 		try {
 			con = DriverManager.getConnection(URL, USER, PASS);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			System.out.println(CLASS_NAME + e.getMessage());
 			throw new SQLException(ERR_SQL);
 		}
 	}
@@ -45,7 +46,7 @@ public class BaseDatabase {
 			}
 			con.close();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			System.out.println(CLASS_NAME + e.getMessage());
 			throw new SQLException(ERR_SQL);
 		}
 	}

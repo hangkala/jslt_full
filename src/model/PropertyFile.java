@@ -6,6 +6,8 @@ package model;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -17,7 +19,8 @@ public class PropertyFile {
 		Properties properties = new Properties();
 		FileInputStream in = null;
 		String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-		String configPath = rootPath + "config.properties";
+		String configPath = rootPath + "resources/config.properties";
+		System.out.println(Thread.currentThread());
 		System.out.println(configPath);
 		try {
 			in = new FileInputStream(configPath);
@@ -36,5 +39,39 @@ public class PropertyFile {
 			}
 		}
 		return (String) properties.get(propName);
+	}
+	
+	public String getProp(String propName) {
+		Properties properties = new Properties();
+		InputStream in = getClass().getClassLoader().getResourceAsStream("resources/config.properties");
+		try {
+			properties.load(in);
+			System.out.println(properties.get("url"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return (String) properties.get(propName);
+	}
+	
+	public static void getProp2(String propName) {
+		URL resourceURL = PropertyFile.class.getResource("/resources/config.properties");
+		System.out.println(resourceURL);
+        Properties appConfig = new Properties();
+        try {
+            appConfig.load(resourceURL.openStream());
+            System.out.println(appConfig.getProperty("user"));
+            System.out.println(appConfig.getProperty("pass"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+	}
+	
+	public static void main(String[] args) {
+		PropertyFile p = new PropertyFile();
+		//System.out.println(p.readProperty("pass"));
+		p.getProp("pass");
+		getProp2(null);
 	}
 }

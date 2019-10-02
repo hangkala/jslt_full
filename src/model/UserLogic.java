@@ -21,7 +21,7 @@ public class UserLogic extends BaseDatabase {
 	
 	public ArrayList<UserBean>getListUser() throws SQLException{
 		ArrayList<UserBean>lsUser = new ArrayList<UserBean>();
-		StringBuilder sql = new StringBuilder("SELECT * FROM 1user");
+		StringBuilder sql = new StringBuilder("SELECT * FROM user");
 		try {
 			openConnection();
 			if(con == null) {
